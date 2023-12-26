@@ -1,0 +1,56 @@
+
+import React, { useState, useEffect } from "react";
+import {Link} from "react-router-dom"
+import "./banner.css";
+
+const images = [
+  require("../images/image 1.jpg"),
+  require("../images/image 2.jpg"),
+  require("../images/image 3.jpg"),
+  require("../images/image 4.jpg"),
+  require("../images/image 5.jpg"),
+  require("../images/image 6.jpg"),
+  require("../images/image 7.jpg"),
+  require("../images/image 8.jpg"),
+  require("../images/image 9.jpeg"),
+  require("../images/image 10.jpg"),
+];
+
+const Banner = () => {
+  const [currentIndex, setCurrentIndex] = useState(0);
+
+  useEffect(() => {
+    const intervalId = setInterval(() => {
+      
+      setCurrentIndex((prevIndex) => (prevIndex + 1) % images.length);
+    }, 3000);
+
+    
+    return () => clearInterval(intervalId);
+  }, [])
+
+  return (
+    <div className="container1">
+      <div className="container">
+      {images.map((image, index) => (
+        <img
+          key={index}
+          src={image}
+          alt={`Banner ${index + 1}`}
+          style={{ display: index === currentIndex ? "block" : "none" }}
+          />
+        ))}
+      </div>
+     <ul className="navigation">
+        <li><Link to="/about">About</Link></li>
+        <li><Link to="/signup">SignUp</Link></li>
+        <li><Link to="/login">Login</Link></li>
+     </ul>
+      
+    </div>
+    
+    
+  );
+};
+
+export default Banner;
