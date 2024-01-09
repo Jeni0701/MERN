@@ -1,0 +1,51 @@
+
+import "./order.css"
+export default function Order({itemName}) {
+    
+   
+return (
+        <div className="container">
+            <h1 className="text text-center">Food Order Form</h1>
+            <form>
+                <div className="form-group">
+                    <label>Item Name : </label>
+                    <input type="text" className="form-control" value={itemName} readOnly/>
+                </div>
+                <div className="form-group">
+                    <label>Quantity  : </label>
+                    <input type="number" className="form-control" />
+                </div>
+                <div className="form-group">
+                    <label>Delivery Address : </label>
+                    <input type="textarea" className="form-control" />
+                </div>
+                <div className="form-group">
+                    <label>Delivery Option : </label>
+                    <select className="form-control">
+                        <option value="home delivery">Home Delivery</option>
+                        <option value="pickup">Pickup</option>
+                    </select>
+                </div>
+                <div className="form-group">
+                    <label>Payment Method : </label>
+                    <select className="form-control">
+                        <option value="credit card">Credit card</option>
+                        <option value="cod">Cash on delivery</option>
+                    </select>
+                </div>
+                <div className="sub-container">
+                    <button className="btn btn-warning">Place Order</button>
+                </div>
+
+            </form>
+        </div>
+    )
+}
+
+
+
+
+
+
+
+
