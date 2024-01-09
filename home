@@ -1,0 +1,117 @@
+import React from "react";
+import { useState,useEffect } from "react";
+import "./home.css"
+import logo from "../image/logo5.png"
+import Signup from "../components/signup.js"
+import Login from "../components/login.js"
+
+export default function Home() {
+  //  Image slider
+  const images = [
+    require("../image/image 9.jpeg"),
+    require("../image/image 1.jpg"),
+    require("../image/image 7.jpg"),
+    require("../image/image 10.jpg"),
+  ];
+  const [currentIndex, setCurrentIndex] = useState(0);
+  const [showSignup, setShowSignup] = useState(false);
+  const [showLogin, setShowLogin] = useState(false);
+  
+
+  useEffect(() => {
+    const intervalId = setInterval(() => {
+
+      setCurrentIndex((prevIndex) => (prevIndex + 1) % images.length);
+    }, 2000);
+
+
+    return () => clearInterval(intervalId);
+  }, [])
+
+
+  // signup and login
+  const closeForms = () => {
+    setShowSignup(false);
+    setShowLogin(false);
+  };
+
+// closing control
+  useEffect(() => {
+    const  handleMouseDownOutside = (event) => {
+      const signupForm = document.querySelector(".signup");
+      const loginForm = document.querySelector(".login");
+
+      if (
+        (signupForm && !signupForm.contains(event.target)) ||
+        (loginForm && !loginForm.contains(event.target))
+      ) {
+        closeForms();
+      }
+    };
+    document.addEventListener("mousedown",  handleMouseDownOutside);
+
+    return () => {
+      document.removeEventListener("mousedown",  handleMouseDownOutside);
+    };
+  }, [showSignup, showLogin]);
+
+
+// show signup and login form
+ const handleSignup=()=>{
+  setShowSignup(true)
+  setShowLogin(false)
+ }
+ const handleLogin=()=>{
+  setShowLogin(true)
+  setShowSignup(false)
+}
+return (
+    <div>
+      <nav className="navbar navbar-default navbar-fixed-top navbar-right">
+       
+        <div className="container-fluid">
+          <img src={logo} style={{height:"50px",width:"60px"}}/>
+           Native Express
+        
+          <ul className="nav nav-pills">
+           <li><a href="/home">Home</a></li>
+            <li><a href="#">About</a></li>
+            <li className="btn btn-warning" onClick={handleSignup} style={{paddingTop:"9px"}}>SignUp</li>
+            <li className="btn btn-warning"onClick={handleLogin}>Login</li>
+          </ul>
+        </div>
+
+      </nav>
+      <div className="slide">
+        <img src={images[currentIndex]} alt={`Slide ${currentIndex}`} />
+        {images.map((image, index) => (
+        <img
+          key={index}
+          src={image}
+          alt={`Banner ${index + 1}`}
+          style={{ display: index === currentIndex ? "block" : "none" }}
+        />
+
+      ))}
+      </div>
+     
+      {showSignup && (
+        <div className="signup">
+          <Signup onclose={closeForms} />
+        </div>
+      )}
+      {showLogin && (
+        <div className="login">
+          <Login onclose={closeForms}/>
+        </div>
+      )}
+      
+      <div className="footer">
+        <footer>
+          
+        </footer>
+      </div>
+    </div>
+
+  )
+}
